@@ -49,13 +49,7 @@
             '../../server/server.gyp:mozc_server',
             '../broker/broker.gyp:mozc_broker32',
             '../ime/ime.gyp:mozc_ime',
-          ],
-          'conditions': [
-            ['branding=="GoogleJapaneseInput"', {
-              'dependencies': [
-                '../custom_action/custom_action.gyp:mozc_custom_action32',
-               ],
-            }],
+            '../custom_action/custom_action.gyp:mozc_custom_action32',
           ],
         },
       ],
