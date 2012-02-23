@@ -67,8 +67,10 @@
             ],
           },
           'libraries': [
-            '<(qt_dir)/lib/libQtCore.a',
-            '<(qt_dir)/lib/libQtGui.a',
+            # '<(qt_dir)/lib/libQtCore.a',
+            # '<(qt_dir)/lib/libQtGui.a',
+            '$(SDKROOT)/System/Library/Frameworks/QtCore.framework',
+            '$(SDKROOT)/System/Library/Frameworks/QtGui.framework',
           ],
         }, {
           'xcode_settings': {
@@ -77,8 +79,10 @@
             ],
           },
           'libraries': [
-            '<(qt_dir_env)/lib/libQtCore.a',
-            '<(qt_dir_env)/lib/libQtGui.a',
+            # '<(qt_dir_env)/lib/libQtCore.a',
+            # '<(qt_dir_env)/lib/libQtGui.a',
+            '$(SDKROOT)/System/Library/Frameworks/QtCore.framework',
+            '$(SDKROOT)/System/Library/Frameworks/QtGui.framework',
           ],
         }],
       ],
