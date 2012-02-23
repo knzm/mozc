@@ -34,7 +34,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSMenu" id="643703843">
-				<string key="NSTitle">Google Japanese Input</string>
+				<string key="NSTitle">Mozc</string>
 				<object class="NSMutableArray" key="NSMenuItems">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="328924351">
@@ -98,7 +98,7 @@
 					</object>
 					<object class="NSMenuItem" id="285142239">
 						<reference key="NSMenu" ref="643703843"/>
-						<string key="NSTitle">About Google Japanese Input</string>
+						<string key="NSTitle">About Mozc</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="238454343"/>
@@ -218,7 +218,7 @@
 							<reference ref="307598403"/>
 						</object>
 						<reference key="parent" ref="0"/>
-						<string key="objectName">Menu (Google Japanese Input)</string>
+						<string key="objectName">Menu (Mozc)</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">10</int>
