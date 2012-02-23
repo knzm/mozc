@@ -97,6 +97,7 @@
         '-dCustomActions32Path=<(mozc_ca32_path)',
         '-dCustomActions64Path=<(mozc_ca64_path)',
         '-dDocumentsDir=<(document_dir)',
+        '-dBranding=<(branding)',
         # we do not use '-o <@(_outputs)' because it causes an error.
         '"-o <@(_outputs)"',
         # We do not use '<@(_inputs)' here because it contains some

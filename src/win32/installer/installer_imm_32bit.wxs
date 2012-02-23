@@ -382,7 +382,7 @@
         (REMOVE="ALL") AND (NOT UPGRADINGPRODUCTCODE)
       </Custom>
       <Custom Action='OpenUninstallSurveyPage' After='UninstallIME' >
-        (REMOVE="ALL") AND (NOT UPGRADINGPRODUCTCODE) AND (UILevel &gt;= 3)
+        (REMOVE="ALL") AND (NOT UPGRADINGPRODUCTCODE) AND (UILevel &gt;= 3) AND (Branding="GoogleJapaneseInput")
       </Custom>
       <SelfRegModules>
         FALSE
