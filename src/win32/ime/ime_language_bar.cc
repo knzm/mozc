@@ -166,8 +166,10 @@ HRESULT LanguageBar::InitLanguageBar(LangBarCallback *text_service) {
     // TODO(yukawa): Make an Icon for kWordRegister kReconversion.
     // TODO(yukawa): Move kReconversion into other appropriate pull-down menu.
     const ImeLangBarMenuItem kToolMenu[] = {
+#ifdef USE_ZINNIA
       {NULL, LangBarCallback::kHandWriting, IDS_HAND_WRITING, 0, 0},
       {NULL, LangBarCallback::kCharacterPalette, IDS_CHARACTER_PALETTE, 0, 0},
+#endif  // USE_ZINNIA
       {NULL, LangBarCallback::kDictionary, IDS_DICTIONARY,
        IDI_DICTIONARY_NT, IDI_DICTIONARY},
       {NULL, LangBarCallback::kWordRegister, IDS_WORD_REGISTER,

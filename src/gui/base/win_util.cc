@@ -287,6 +287,7 @@ bool AddTasksToList(CComPtr<ICustomDestinationList> destination_list) {
 
   // TODO(yukawa): Investigate better way to localize strings.
   const LinkInfo kLinks[] = {
+#ifdef USE_ZINNIA
     // "手書き文字入力"
     {"--mode=hand_writing",
      "Hand Wrinting",
@@ -297,6 +298,7 @@ bool AddTasksToList(CComPtr<ICustomDestinationList> destination_list) {
      "Character Palette",
      "\xE6\x96\x87\xE5\xAD\x97\xE3\x83\x91\xE3\x83\xAC\xE3\x83\x83"
      "\xE3\x83\x88"},
+#endif  // USE_ZINNIA
     // "辞書ツール"
     {"--mode=dictionary_tool",
      "Dictionary Tool",
