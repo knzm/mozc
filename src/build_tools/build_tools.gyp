@@ -71,6 +71,11 @@
             'install_gen_pinyin_english_dictionary_data_main',
           ]
         }],
+        ['OS=="win"', {
+          'dependencies': [
+            '../gui/zinnia.gyp:install_zinnia_convert',
+          ],
+        }],
       ],
     },
   ],

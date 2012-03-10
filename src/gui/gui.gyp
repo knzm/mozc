@@ -62,6 +62,13 @@
         '../session/session_base.gyp:session_protocol',
         'gen_base_files',
       ],
+      'conditions': [
+        ['use_zinnia=="YES"', {
+          'defines': [
+            'USE_ZINNIA',
+          ],
+        }],
+      ],
       'includes': [
         'qt_libraries.gypi',
       ],

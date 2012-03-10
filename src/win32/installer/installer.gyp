@@ -52,7 +52,7 @@
         'mozc_tool_path': '<(outdir32)/mozc_tool.exe',
         'mozc_broker32_path': '<(outdir32)/mozc_broker32.exe',
         'mozc_broker64_path': '<(outdir64)/mozc_broker64.exe',
-        'mozc_zinnia_model_data_path': '',
+        'mozc_zinnia_model_data_path': '<(SHARED_INTERMEDIATE_DIR)/zinnia-tomoe-model/handwriting-ja.model',
         'mozc_ca32_path': '<(outdir32)/mozc_installer_helper32.dll',
         'mozc_ca64_path': '<(outdir64)/mozc_installer_helper64.dll',
         'mozc_content_dir': '<(DEPTH)/data',

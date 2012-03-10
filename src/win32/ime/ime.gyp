@@ -198,6 +198,13 @@
               'ModuleDefinitionFile': 'GoogleIMEJa.def',
             },
           },
+          'conditions': [
+            ['use_zinnia=="YES"', {
+              'defines': [
+                'USE_ZINNIA',
+              ],
+            }],
+          ],
           'includes': [
             '../../gyp/postbuilds_win.gypi',
           ],

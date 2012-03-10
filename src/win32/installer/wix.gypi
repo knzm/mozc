@@ -31,6 +31,7 @@
   'type': 'none',
   'dependencies': [
     'mozc_installer_version_file',
+    '<(DEPTH)/gui/zinnia.gyp:gen_zinnia_files',
   ],
   'actions': [
     {

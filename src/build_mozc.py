@@ -432,6 +432,7 @@ def ParseGypOptions(args=None, values=None):
 
   use_dynamically_linked_qt_default = True
   parser.add_option('--use_dynamically_linked_qt',
+                    action='store', type='int',
                     dest='use_dynamically_linked_qt',
                     default=use_dynamically_linked_qt_default,
                     help='Use dynamically linked version of Qt. '
@@ -501,10 +502,8 @@ def ParseGypOptions(args=None, values=None):
                     help='A path to the directory to be installed server '
                     'executable. This option is only available for Linux.')
 
-  if IsWindows():
-    # Zinnia on Windows cannot be enabled because of compile error.
-    use_zinnia_default = False
   parser.add_option('--use_zinnia', dest='use_zinnia',
+                    action='store', type='int',
                     default=use_zinnia_default,
                     help='Use Zinnia if specified.')
 
