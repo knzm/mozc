@@ -746,7 +746,10 @@
           'OTHER_CFLAGS': [
             '<@(gcc_cflags)',
           ],
-          'WARNING_CFLAGS': ['<@(warning_cflags)'],
+          'WARNING_CFLAGS': [
+            '<@(warning_cflags)',
+            '-Wno-#warnings',
+          ],
           'SDKROOT': 'macosx10.5',
         },
         'link_settings': {
