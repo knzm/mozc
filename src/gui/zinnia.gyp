@@ -107,14 +107,7 @@
           },
           'inputs': [
             '<(input_file)',
-          ],
-          'conditions': [
-            ['two_pass_build==0', {
-                'inputs': [
-                    '<(mozc_build_tools_dir)/zinnia_convert',
-                ],
-              },
-            ],
+            '<(mozc_build_tools_dir)/zinnia_convert',
           ],
           'outputs': [
             '<(gen_out_dir)/handwriting-ja.model',
