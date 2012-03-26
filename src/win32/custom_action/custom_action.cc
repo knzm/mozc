@@ -54,7 +54,11 @@
 #include "win32/base/imm_registrar.h"
 #include "win32/base/imm_util.h"
 #include "win32/base/keyboard_layout_id.h"
+
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
 #include "win32/base/omaha_util.h"
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
+
 #include "win32/base/uninstall_helper.h"
 #include "win32/custom_action/resource.h"
 
@@ -72,7 +76,9 @@ if (::IsDebuggerPresent()) {        \
 
 
 namespace {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
 using mozc::win32::OmahaUtil;
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
 
 const char kIEFrameDll[] = "ieframe.dll";
 const wchar_t kSystemSharedKey[] = L"Software\\Microsoft\\CTF\\SystemShared";
@@ -191,6 +197,7 @@ wstring GetVersionHeader() {
                                    mozc::Version::GetMozcVersionW().c_str());
 }
 
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
 bool WriteOmahaErrorById(int resource_id) {
   wchar_t buffer[4096];
   const int length
@@ -221,6 +228,7 @@ bool WriteOmahaError(const wchar_t (&function)[num_elements], int line) {
 // This message will be displayed by Omaha meta installer on the error
 // dialog.
 #define LOG_ERROR_FOR_OMAHA() WriteOmahaError(_T(__FUNCTION__), __LINE__)
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
 
 UINT RemovePreloadKeyByKLID(const mozc::win32::KeyboardLayoutID &klid) {
   if (!klid.has_id()) {
@@ -258,7 +266,9 @@ UINT __stdcall RefreshPolicy(MSIHANDLE msi_handle) {
   HRESULT result = CallSystemDllFunction(kIEFrameDll,
                                          "IERefreshElevationPolicy");
   if (FAILED(result)) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
   return ERROR_SUCCESS;
@@ -284,11 +294,15 @@ UINT __stdcall ShutdownServer(MSIHANDLE msi_handle) {
   mozc::renderer::RendererClient renderer_client;
   const bool renderer_result = renderer_client.Shutdown(true);
   if (!server_result) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
   if (!renderer_result) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
 
@@ -341,8 +355,10 @@ UINT __stdcall HideCancelButton(MSIHANDLE msi_handle) {
 UINT __stdcall InitialInstallation(MSIHANDLE msi_handle) {
   DEBUG_BREAK_FOR_DEBUGGER();
 
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
   // Write a general error message in case any unexpected error occurs.
   WriteOmahaErrorById(IDS_UNEXPECTED_ERROR);
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
 
   // We cannot rely on the result of GetVersion(Ex) in custom actions.
   // http://b/2430094
@@ -352,7 +368,9 @@ UINT __stdcall InitialInstallation(MSIHANDLE msi_handle) {
   // MsiEvaluateCondition API may be another way to check the condition.
   // http://msdn.microsoft.com/en-us/library/aa370104.aspx
   if (!mozc::Util::IsPlatformSupported()) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     WriteOmahaErrorById(IDS_UNSUPPORTED_PLATFORM);
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
   return ERROR_SUCCESS;
@@ -362,7 +380,9 @@ UINT __stdcall InitialInstallationCommit(MSIHANDLE msi_handle) {
   DEBUG_BREAK_FOR_DEBUGGER();
 
   // Set error code 0, which means success.
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
   OmahaUtil::ClearOmahaError();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
   return ERROR_SUCCESS;
 }
 
@@ -373,31 +393,41 @@ UINT __stdcall SaveCustomActionData(MSIHANDLE msi_handle) {
   const wstring channel = GetProperty(msi_handle, L"CHANNEL");
   if (!channel.empty()) {
     if (!SetProperty(msi_handle, L"WriteApValue", channel)) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
       LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
       return ERROR_INSTALL_FAILURE;
     }
   }
 
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
   // store the original ap value for WriteApValueRollback.
   const wstring ap_value = OmahaUtil::ReadChannel();
   if (!SetProperty(msi_handle, L"WriteApValueRollback", ap_value.c_str())) {
     LOG_ERROR_FOR_OMAHA();
     return ERROR_INSTALL_FAILURE;
   }
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
 
   // store the current settings of the cache service.
   wstring backup;
   if (!mozc::CacheServiceManager::BackupStateAsString(&backup)) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
   if (!SetProperty(msi_handle, L"RestoreServiceState", backup.c_str())) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
   if (!SetProperty(msi_handle, L"RestoreServiceStateRollback",
                    backup.c_str())) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
   return ERROR_SUCCESS;
@@ -436,17 +466,20 @@ UINT __stdcall WriteApValue(MSIHANDLE msi_handle) {
     return ERROR_SUCCESS;
   }
 
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
   const bool result = OmahaUtil::WriteChannel(channel);
   if (!result) {
     LOG_ERROR_FOR_OMAHA();
     return ERROR_INSTALL_FAILURE;
   }
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
   return ERROR_SUCCESS;
 }
 
 UINT __stdcall WriteApValueRollback(MSIHANDLE msi_handle) {
   DEBUG_BREAK_FOR_DEBUGGER();
   const wstring ap_value = GetProperty(msi_handle, L"CustomActionData");
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
   if (ap_value.empty()) {
     // The ap value did not originally exist so attempt to delete the value.
     if (!OmahaUtil::ClearChannel()) {
@@ -461,6 +494,7 @@ UINT __stdcall WriteApValueRollback(MSIHANDLE msi_handle) {
     LOG_ERROR_FOR_OMAHA();
     return ERROR_INSTALL_FAILURE;
   }
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
   return ERROR_SUCCESS;
 }
 
@@ -470,7 +504,9 @@ UINT __stdcall InstallIME(MSIHANDLE msi_handle) {
   const wstring ime_path =
       mozc::win32::ImmRegistrar::GetFullPathForIME();
   if (ime_path.empty()) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
   const wstring ime_filename =
@@ -478,7 +514,9 @@ UINT __stdcall InstallIME(MSIHANDLE msi_handle) {
 
   const wstring layout_name = mozc::win32::ImmRegistrar::GetLayoutName();
   if (layout_name.empty()) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
 
@@ -488,7 +526,9 @@ UINT __stdcall InstallIME(MSIHANDLE msi_handle) {
       ime_filename, layout_name, ime_path,
       mozc::win32::ImmRegistrar::GetLayoutDisplayNameResourceId(), &hkl);
   if (result != S_OK) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
 
@@ -545,7 +585,9 @@ UINT __stdcall DisableErrorReporting(MSIHANDLE msi_handle) {
                                            value_name.c_str(), value,
                                            KEY_WOW64_64KEY);
     if (!result) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
       LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
       return ERROR_INSTALL_FAILURE;
     }
     // Write to 32 bit key, too.
@@ -559,7 +601,9 @@ UINT __stdcall DisableErrorReporting(MSIHANDLE msi_handle) {
                                            value, 0);
   }
   if (!result) {
+#if defined(GOOGLE_JAPANESE_INPUT_BUILD)
     LOG_ERROR_FOR_OMAHA();
+#endif  // !GOOGLE_JAPANESE_INPUT_BUILD
     return ERROR_INSTALL_FAILURE;
   }
 

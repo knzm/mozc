@@ -45,13 +45,7 @@
           'dependencies': [
             '../broker/broker.gyp:mozc_broker64',
             '../ime/ime.gyp:mozc_ime',
-          ],
-          'conditions': [
-            ['branding=="GoogleJapaneseInput"', {
-              'dependencies': [
-                '../custom_action/custom_action.gyp:mozc_custom_action64',
-               ],
-            }],
+            '../custom_action/custom_action.gyp:mozc_custom_action64',
           ],
         },
       ],

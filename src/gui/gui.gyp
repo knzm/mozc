@@ -62,6 +62,13 @@
         '../session/session_base.gyp:session_protocol',
         'gen_base_files',
       ],
+      'conditions': [
+        ['use_zinnia=="YES"', {
+          'defines': [
+            'USE_ZINNIA',
+          ],
+        }],
+      ],
       'includes': [
         'qt_libraries.gypi',
       ],
@@ -695,6 +702,7 @@
         '../dictionary/dictionary.gyp:dictionary_protocol',
         '../dictionary/dictionary.gyp:user_dictionary',
         '../session/session_base.gyp:session_protocol',
+        '../session/session_base.gyp:genproto_session',
         'gen_word_register_dialog_files',
       ],
       'includes': [

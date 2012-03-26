@@ -73,5 +73,59 @@
         }],
       ],
     },
+    {
+      'target_name': 'zinnia_convert',
+      'type': 'executable',
+      'sources': [
+        '<(DEPTH)/third_party/zinnia/v0_04/zinnia_convert.cpp',
+      ],
+      'dependencies': [
+        'zinnia',
+      ],
+    },
+    {
+      'target_name': 'install_zinnia_convert',
+      'type': 'none',
+      'variables': {
+        'bin_name': 'zinnia_convert'
+      },
+      'includes' : [
+        '../gyp/install_build_tool.gypi',
+      ]
+    },
+    {
+      'target_name': 'gen_zinnia_files',
+      'type': 'none',
+      'actions': [
+        {
+          'action_name': 'gen_zinnia_model_data',
+          'variables': {
+            'input_file':
+                '../third_party/zinnia-tomoe-model/handwriting-ja.model.txt',
+            'relative_dir': 'zinnia-tomoe-model',
+            'gen_out_dir': '<(SHARED_INTERMEDIATE_DIR)/<(relative_dir)',
+          },
+          'inputs': [
+            '<(input_file)',
+          ],
+          'conditions': [
+            ['two_pass_build==0', {
+                'inputs': [
+                    '<(mozc_build_tools_dir)/zinnia_convert',
+                ],
+              },
+            ],
+          ],
+          'outputs': [
+            '<(gen_out_dir)/handwriting-ja.model',
+          ],
+          'action': [
+            '<(mozc_build_tools_dir)/zinnia_convert',
+            '<(input_file)',
+            '<(gen_out_dir)/handwriting-ja.model',
+          ],
+        },
+      ],
+    },
   ],
 }

@@ -29,7 +29,7 @@
 
 {
   'conditions': [
-    ['OS!="win" or use_wix!="YES" or branding!="GoogleJapaneseInput"', {
+    ['OS!="win" or use_wix!="YES"', {
       # Add a dummy target because at least one target is needed in a gyp file.
       'targets': [
         {
@@ -37,35 +37,29 @@
           'type': 'none',
         },
       ],
-    }, {  # else, that is: 'OS=="win" and use_wix=="YES" and branding=="GoogleJapaneseInput"'
+    }, {  # else, that is: 'OS=="win" and use_wix=="YES"'
       'variables': {
         'relative_dir': 'win32/installer',
         'gen_out_dir': '<(SHARED_INTERMEDIATE_DIR)/<(relative_dir)',
         'outdir32': '<(build_base)/$(ConfigurationName)',
         'outdir64': '<(build_base)/$(ConfigurationName)64',
         'mozc_version_file': '<(gen_out_dir)/mozc_version.wxi',
-        'mozc_ime32_path': '<(outdir32)/GIMEJa.ime',
-        'mozc_ime64_path': '<(outdir64)/GIMEJa.ime',
-        'mozc_server_path': '<(outdir32)/GoogleIMEJaConverter.exe',
-        'mozc_cache_service_path': '<(outdir32)/GoogleIMEJaCacheService.exe',
-        'mozc_renderer_path': '<(outdir32)/GoogleIMEJaRenderer.exe',
-        'mozc_tool_path': '<(outdir32)/GoogleIMEJaTool.exe',
-        'conditions': [
-          ['use_qt=="YES"', {
-            'mozc_zinnia_model_data_path%': '<(DEPTH)/third_party/zinnia/tomoe/handwriting-light-ja.model',
-          }, {  # else, that is 'use_qt!="YES"'
-            'mozc_zinnia_model_data_path': '',
-          }],
-        ],
-        'mozc_broker32_path': '<(outdir32)/GoogleIMEJaBroker32.exe',
-        'mozc_broker64_path': '<(outdir64)/GoogleIMEJaBroker64.exe',
-        'mozc_ca32_path': '<(outdir32)/GoogleIMEJaInstallerHelper32.dll',
-        'mozc_ca64_path': '<(outdir64)/GoogleIMEJaInstallerHelper64.dll',
+        'mozc_ime32_path': '<(outdir32)/mozc_ja.ime',
+        'mozc_ime64_path': '<(outdir64)/mozc_ja.ime',
+        'mozc_server_path': '<(outdir32)/mozc_server.exe',
+        'mozc_cache_service_path': '<(outdir32)/mozc_cache_service.exe',
+        'mozc_renderer_path': '<(outdir32)/mozc_renderer.exe',
+        'mozc_tool_path': '<(outdir32)/mozc_tool.exe',
+        'mozc_broker32_path': '<(outdir32)/mozc_broker32.exe',
+        'mozc_broker64_path': '<(outdir64)/mozc_broker64.exe',
+        'mozc_zinnia_model_data_path': '<(SHARED_INTERMEDIATE_DIR)/zinnia-tomoe-model/handwriting-ja.model',
+        'mozc_ca32_path': '<(outdir32)/mozc_installer_helper32.dll',
+        'mozc_ca64_path': '<(outdir64)/mozc_installer_helper64.dll',
         'mozc_content_dir': '<(DEPTH)/data',
         'mozc_imm_32bit_wixobj': '<(outdir32)/installer_imm_32bit.wixobj',
-        'mozc_imm_32bit_msi': '<(outdir32)/GoogleJapaneseInput32.msi',
+        'mozc_imm_32bit_msi': '<(outdir32)/Mozc32.msi',
         'mozc_imm_64bit_wixobj': '<(outdir32)/installer_imm_64bit.wixobj',
-        'mozc_imm_64bit_msi': '<(outdir32)/GoogleJapaneseInput64.msi',
+        'mozc_imm_64bit_msi': '<(outdir32)/Mozc64.msi',
         'mozc_32bit_binaries': [
           '<(mozc_ime32_path)',
           '<(mozc_server_path)',
